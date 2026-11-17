@@ -21,7 +21,13 @@
 --    Inventory(item_id) and Inventory(expiration_date) for joins and
 --    expiration lookups.
 -- 6. Added view InventoryDetails and trigger trg_DonationReceived
---    (created in Statements 25 and 26).
+--    (created in Statements 24 and 25).
+-- 7. Renamed the relationship tables DistributionItem and VolunteerAssignment
+--    to Includes and Staffs, matching the relationship names in the ER diagram.
+-- 8. Added CHECK constraints (Recipient.household_size > 0, Staffs.hours >= 0,
+--    Includes.quantity > 0) and indexes on Distribution(bank_id),
+--    Distribution(recipient_id), Staffs(distribution_id) and
+--    Includes(inventory_id).
 -- ============================================================================
 
 -- ============================================================================
@@ -52,6 +58,7 @@
 -- Statement 20: Emeka: 100%, Dina: 0%
 --
 -- SECTION 3: COMPLEX STATEMENTS
+-- Statement 21: Dina: 100%, Emeka: 0%
 -- Statement 22: Dina: 100%, Emeka: 0%
 -- Statement 23: Dina: 100%, Emeka: 0%
 -- Statement 24: Dina: 100%, Emeka: 0%
@@ -61,7 +68,6 @@
 -- Statement 28: Emeka: 100%, Dina: 0%
 -- Statement 29: Emeka: 100%, Dina: 0%
 -- Statement 30: Emeka: 100%, Dina: 0%
--- Statement 31: Emeka: 100%, Dina: 0%
 -- ============================================================================
 
 PRAGMA foreign_keys = ON;
@@ -125,6 +131,7 @@ WHERE NOT EXISTS (
 -- ----------------------------------------------------------------------------
 DELETE FROM Donation
 WHERE donation_id = 24;
+
 -- ----------------------------------------------------------------------------
 -- Statement 06: Volunteer Availability List
 -- Explanation: List every volunteer and their availability, ordered
